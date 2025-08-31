@@ -10,7 +10,7 @@ return {
 					group_empty = true,
 					root_folder_label = false,
 				},
-				filters = { dotfiles = false },
+				filters = { dotfiles = false, git_ignored = false },
 				git = { enable = true },
 				hijack_directories = {
 					enable = true,
