@@ -8,4 +8,7 @@ vim.opt.termguicolors = true
 -- Hand off to our structured lazy.nvim setup
 require("config.lazy")
 
-require("config.after.nvim-tree")
+require("config.after")
+require("config.keymaps")
+require("config.commands")
+require("config.options")

@@ -6,8 +6,11 @@ return {
 		config = function()
 			require("nvim-tree").setup({
 				view = { side = "right", width = 40 },
-				renderer = { group_empty = true },
-				filters = { dotfiles = true },
+				renderer = { 
+					group_empty = true,
+					root_folder_label = false,
+				},
+				filters = { dotfiles = false },
 				git = { enable = true },
 				hijack_directories = {
 					enable = true,
