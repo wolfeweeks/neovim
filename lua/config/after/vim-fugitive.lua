@@ -83,9 +83,14 @@ local function generate_commit_message()
     "- Base it strictly on the staged diff. If you need file context, read files in the diff.",
   }, "\n")
 
-  -- You already use OpenCode’s “read all files in the diff” style; we’ll let it handle that.
   local result = vim.system(
-    { "opencode", "run", prompt .. "\n\nUse: git status, git diff --cached, and read all files in the staged diff." },
+    {
+      "opencode",
+      "run",
+      prompt .. "\n\nUse: git status, git diff --cached, and read all files in the staged diff.",
+      "-m",
+      "anthropic/claude-3-5-haiku-20241022",
+    },
     { cwd = root, text = true }
   ):wait(60000)
 
