@@ -31,14 +31,14 @@ return {
     return {
       indent = {
         -- Use rainbow colors for the vertical lines
-        char = "│",
+        char = "▏",
         highlight = highlight,
       },
       scope = {
         enabled = true,
         show_start = true,
         show_end = true,
-        char = "│",
+        char = "▏",
         highlight = "IndentScope",  -- Use white for scope only
       },
     }
