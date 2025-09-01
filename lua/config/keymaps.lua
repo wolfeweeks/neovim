@@ -20,3 +20,4 @@ map("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 map("n", "<leader>d", "<C-d>zz", opts)
 map("n", "<leader>u", "<C-u>zz", opts)
 
+map("n", "<C-a>", "gg0vG$l", opts)
