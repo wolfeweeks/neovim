@@ -17,7 +17,7 @@ map("v", "<A-j>", ":m '>+1<CR>gv=gv", opts)
 map("v", "<A-k>", ":m '<-2<CR>gv=gv", opts)
 
 -- Recenter cursor after page moves
-map("n", "<leader>d", "<C-d>zz", opts)
-map("n", "<leader>u", "<C-u>zz", opts)
+map("n", "<leader>j", "<C-d>zz", opts)
+map("n", "<leader>k", "<C-u>zz", opts)
 
 map("n", "<C-a>", "gg0vG$l", opts)
