@@ -80,6 +80,8 @@ local function generate_commit_message()
     "- Keep the subject ≤ 72 chars.",
     "- If helpful, include a short body with wrapped lines (≤ 72 chars) and bullets.",
     "- Do *not* include code fences or markdown headings.",
+    "- Do *not* include any prose in your response (e.g. \"Based on your diff...\"), only output the commit message",
+    "- Do *not* pay any attention to untracked files or unstaged changes.",
     "- Base it strictly on the staged diff. If you need file context, read files in the diff.",
   }, "\n")
 
