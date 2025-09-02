@@ -30,6 +30,7 @@ vim.keymap.set("n", "<leader>gs", function()
 		end
 	else
 		vim.cmd("Git")
+		vim.cmd("wincmd _")
 	end
 end, { silent = true, desc = "Fugitive: toggle status" })
 
