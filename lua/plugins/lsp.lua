@@ -33,6 +33,12 @@ return {
 				capabilities = cmp_lsp.default_capabilities(capabilities)
 			end
 
+			-- ✨ Add folding capability for UFO (not enabled by default in Neovim)
+			capabilities.textDocument.foldingRange = {
+				dynamicRegistration = false,
+				lineFoldingOnly = true,
+			}
+
 			-- apply to *all* servers
 			vim.lsp.config("*", { capabilities = capabilities }) -- Neovim 0.11+
 

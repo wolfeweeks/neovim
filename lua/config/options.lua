@@ -46,3 +46,20 @@ vim.opt.fillchars:append({
 -- Keep the single global statusline and show a small title per window
 vim.opt.laststatus = 3
 vim.opt.winbar = " %t %m" -- file name + modified flag
+
+-- Show a 1-column fold gutter with nice icons
+vim.opt.foldcolumn = "1" -- '0' = hide, '1' = show column
+vim.opt.foldlevel = 99 -- high so folds start open (UFO manages them)
+vim.opt.foldlevelstart = 99
+vim.opt.foldenable = true
+
+-- Pretty fold icons (fits your window separators)
+vim.opt.fillchars:append({
+	foldopen = "v",
+	foldclose = ">",
+	fold = " ",
+	foldsep = " ",
+})
+
+-- Optional: allow clicking folds with mouse like VS Code
+vim.opt.mouse = "a"
