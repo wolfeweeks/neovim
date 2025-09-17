@@ -7,7 +7,7 @@ return {
 		"mason-org/mason-lspconfig.nvim",
 		dependencies = { "neovim/nvim-lspconfig" },
 		opts = {
-			ensure_installed = { "lua_ls", "ts_ls", "bashls", "jsonls", "marksman" },
+			ensure_installed = { "lua_ls", "vtsls", "bashls", "jsonls", "marksman" },
 			-- leave automatic_enable = true (default)
 		},
 	},

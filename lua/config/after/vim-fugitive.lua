@@ -34,35 +34,47 @@ vim.keymap.set("n", "<leader>gs", function()
 	end
 end, { silent = true, desc = "Fugitive: toggle status" })
 
--- Make <CR> in :Git status open the file in a right-side vsplit
+-- Make <CR> in :Git status open the file in current window and close fugitive
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = "fugitive",
 	callback = function(ev)
-		vim.opt_local.splitright = true
-
 		vim.keymap.set("n", "<CR>", function()
 			-- parse filename from the status line (works even if cursor is on the "M")
 			local line = vim.fn.getline(".")
 			local file = line:match("^%s*[%w%?][%w%? ]*%s+(.+)$")
 
 			if file and #file > 0 then
-				-- Open the file in a vertical split on the right (in the TOP row),
-				-- then move *into that split* before making it full height.
-				vim.cmd("rightbelow Gvsplit " .. vim.fn.fnameescape(file))
-				vim.cmd("wincmd l") -- go to the new right-hand split
-				vim.cmd("wincmd L") -- make THIS split the full-height right column
-
-				-- ensure MiniDiff overlay toggles after the new buffer is fully ready
-				local buf = vim.api.nvim_get_current_buf()
-				vim.schedule(function()
-					local md = require("mini.diff")
-					pcall(md.attach, buf) -- harmless if already attached
-					pcall(md.toggle_overlay, buf) -- toggle overlay for this buffer
-				end)
+				local fugitive_win = vim.api.nvim_get_current_win()
+				
+				-- Find the first non-fugitive window (could be NvimTree or a regular buffer)
+				local target_win = nil
+				for _, win in ipairs(vim.api.nvim_list_wins()) do
+					local buf = vim.api.nvim_win_get_buf(win)
+					local ft = vim.api.nvim_buf_get_option(buf, "filetype")
+					if ft ~= "fugitive" then
+						target_win = win
+						break
+					end
+				end
+				
+				-- If we found a non-fugitive window, switch to it before opening the file
+				if target_win and vim.api.nvim_win_is_valid(target_win) then
+					vim.api.nvim_set_current_win(target_win)
+					-- Open the file (this will replace whatever buffer is in the target window)
+					vim.cmd("edit " .. vim.fn.fnameescape(file))
+				else
+					-- No other window exists, just open in current window
+					vim.cmd("Gedit " .. vim.fn.fnameescape(file))
+				end
+				
+				-- Close the fugitive window if it still exists
+				if vim.api.nvim_win_is_valid(fugitive_win) and fugitive_win ~= vim.api.nvim_get_current_win() then
+					pcall(vim.api.nvim_win_close, fugitive_win, true)
+				end
 			else
 				vim.cmd("normal! <CR>")
 			end
-		end, { buffer = ev.buf, silent = true, desc = "Fugitive: open file at cursor in right vsplit" })
+		end, { buffer = ev.buf, silent = true, desc = "Fugitive: open file and close status window" })
 	end,
 })
 

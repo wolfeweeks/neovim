@@ -4,9 +4,10 @@ return {
 		dependencies = { "nvim-tree/nvim-web-devicons" },
 		lazy = false,
 		config = function()
-			require("nvim-tree").setup({
+			local nvim_tree = require("nvim-tree")
+			nvim_tree.setup({
 				view = { side = "right", width = 40 },
-				renderer = { 
+				renderer = {
 					group_empty = true,
 					root_folder_label = false,
 				},
@@ -15,6 +16,11 @@ return {
 				hijack_directories = {
 					enable = true,
 					auto_open = true,
+				},
+				actions = {
+					open_file = {
+						quit_on_open = true,
+					},
 				},
 			})
 
@@ -25,7 +31,7 @@ return {
 					if directory then
 						require("nvim-tree.api").tree.open()
 					end
-				end
+				end,
 			})
 		end,
 		keys = {
@@ -33,4 +39,3 @@ return {
 		},
 	},
 }
-
