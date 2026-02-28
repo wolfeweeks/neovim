@@ -1,12 +1,30 @@
 -- Colorscheme configuration
--- The 'boost' colorscheme is available but not set as default
--- Use .nvim.lua in project directories to enable it locally
+-- Sets 'github' as the default colorscheme
 
 return {
-  -- Update lualine theme when boost colorscheme is activated
+  -- Disable LazyVim's default tokyonight
+  { "folke/tokyonight.nvim", enabled = false },
+
+  -- Load github colorscheme
+  {
+    "LazyVim/LazyVim",
+    opts = {
+      colorscheme = "github",
+    },
+  },
+
+  -- Update lualine theme when custom colorschemes are activated
   {
     "nvim-lualine/lualine.nvim",
     opts = function(_, opts)
+      vim.api.nvim_create_autocmd("ColorScheme", {
+        pattern = "github",
+        callback = function()
+          require("lualine").setup({
+            options = { theme = require("github").lualine() },
+          })
+        end,
+      })
       vim.api.nvim_create_autocmd("ColorScheme", {
         pattern = "boost",
         callback = function()
